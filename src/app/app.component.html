@@ -1,0 +1,73 @@
+<div class="container">
+  <h1 class="text-center"> Administración de artículos </h1> <hr>
+
+  <div class="row">
+
+    <!-- Tabla -->
+    <div class="col-md-6">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="text-center">Código</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Borrar</th>
+            <th scope="col">Seleccionar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let articulo of articulos; let i = index">
+            <th scope="row" class="text-center"> {{ i + 1 }}</th>
+            <td> {{ articulo.descripcion }} </td>
+            <td> {{ articulo.precio | currency }} </td>
+            <td>
+              <button class="btn btn-sm btn-danger"
+                      (click)="deleteArticulo( i )"> Borrar </button>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-info"
+                      (click)="getArticulo( i )"> Seleccionar </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Formulario -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="container">
+          <form class="my-3" [formGroup]="form">
+
+            <div class="form-group">
+              <label> Código </label>
+              <input type="number" class="form-control" formControlName="codigo" readonly>
+              <small class="text-muted"> *Este campo es automático </small>
+            </div>
+
+            <div class="form-group">
+              <label> Descripción </label>
+              <input type="text" class="form-control" formControlName="descripcion">
+            </div>
+
+            <div class="form-group">
+              <label> Precio </label>
+              <input type="number" class="form-control" formControlName="precio">
+            </div>
+
+            <div class="form-group d-flex justify-content-around">
+              <button class="btn btn-primary large"
+                      [disabled]="form.invalid"
+                      (click)="postArticulo()"> Agregar </button>
+
+              <button class="btn btn-secondary large"
+                      [disabled]="!(form.get('codigo').value) || form.invalid"
+                      (click)="patchArticulo()"> Modificar </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
